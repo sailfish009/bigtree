@@ -484,6 +484,7 @@ def list_to_tree(
     sep: str = "/",
     duplicate_name_allowed: bool = True,
     node_type: Type[Node] = Node,
+    reverse: bool = False,
 ) -> Node:
     """Construct tree from list of path strings.
 
@@ -523,6 +524,15 @@ def list_to_tree(
 
     # Remove duplicates
     paths = list(OrderedDict.fromkeys(paths))
+
+    # Reverse Paths
+    if reverse == True: 
+        reverse_paths = []
+        for path in paths:
+            path_arr = path.split(sep)
+            path_arr = path_arr[::-1]
+            reverse_paths.append(sep.join(path_arr))
+        paths = reverse_paths.copy()    
 
     # Construct root node
     root_name = paths[0].lstrip(sep).split(sep)[0]
